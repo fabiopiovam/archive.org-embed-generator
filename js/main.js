@@ -31,7 +31,7 @@ function get_audio(arr){
         
         //embed
         embed   = ' [iframe ' + embed_base + v[0] + ' 500 30]';
-        iframe  = '<iframe frameborder="0" style="height:30px;width:500px;" src="' + embed_base + v[0] + '">Please upgrade your browser</iframe>';
+        iframe  = '<iframe frameborder="0" style="height:30px;width:100%;" src="' + embed_base + v[0] + '">Please upgrade your browser</iframe>';
         
         //link download
         link = ' Download: ';
@@ -39,18 +39,19 @@ function get_audio(arr){
         if (typeof v.optional != 'undefined') link += " | <a href='" + link_base + v.optional[0] + "' target='_blank'>" + v.optional[1].format + "</a>";
         
         text = title_audio + embed + link;
-        audios += '<div>' + title_audio + '<br/>' + iframe + '<br/>' + link + '<br/>' + ' <textarea id="' + v[0] + '" class="to_copy" rows="4" cols="40" readonly="true">' + text + '</textarea><br/><br/></div>';
+        audios += '<div class="span5">' + title_audio + '<br/>' + iframe + '<br/>' + link + '<br/>' + ' <textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea><br/></div>';
     });
     
-    if (arr.lenght > 1){
-        unique_embed = '<div>Lista com todos os audios agrupados <br/>';
-        unique_embed += '<iframe src="' + embed_base + '&playlist=1" width="500" height="120" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe> <br/>';
-        unique_embed += '<textarea id="full_embed" class="to_copy" rows="4" cols="40" readonly="true">[iframe ' + embed_base + '&playlist=1 500 120]</textarea> </div> <br/>';
+    if (arr.length > 1){
+        unique_embed = '<div class="span8"><h3>Lista com todos os audios agrupados</h3>';
+        unique_embed += '<iframe src="' + embed_base + '&playlist=1" class="input-block-level" height="120" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe> <br/>';
+        unique_embed += '<input type="text" value="[iframe ' + embed_base + '&playlist=1 500 120]" class="to_copy input-block-level" readonly="true" /> <br/><br/> </div>';
     } 
     
-    $('#wp-audio').append('<h1>Audios</h1>');
-    $('#wp-audio').append(audios);
-    $('#wp-audio').append(unique_embed);
+    $('#wp-audio').append('<div id="content_audio" class="row-fluid"></div>');
+    $('#wp-audio #content_audio').append('<h1>Audios</h1>');
+    $('#wp-audio #content_audio').append(audios);
+    $('#wp-audio #content_audio').append(unique_embed);
 }
 
 
@@ -59,12 +60,13 @@ function get_image(arr){
     link = 'https://archive.org/download/' + identifier;
     img = '';
     $.each(arr, function(k,v) {
-        text = '<a target="_blank" rel="lightbox" href=" ' + link + v[0] + ' "><img src=" ' + link + v.thumb[0] + ' " title="clique para aumentar"></a>';
-        img += '<div> ' + text + ' <textarea id="' + v[0] + '" class="to_copy" rows="4" cols="40" readonly="true">' + text + '</textarea> </div>';
+        text = '<a target="_blank" rel="lightbox" href=" ' + link + v[0] + ' "><img src=" ' + link + v.thumb[0] + ' " title="clique para aumentar"></a><br/><br/>';
+        img += '<div class="span3"> ' + text + ' <textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea> <br/></div>';
     });
     
-    $('#wp-photos').append('<h1>Imagens</h1>');
-    $('#wp-photos').append(img);
+    $('#wp-photos').append('<div id="img_content" class="row-fluid"></div>');
+    $('#wp-photos #img_content').append('<h1>Imagens</h1>');
+    $('#wp-photos #img_content').append(img);
 }
 
 
@@ -73,25 +75,25 @@ function wp_gallery_items(cols){
     link = 'https://archive.org/download/' + identifier;
     imgs = '';
     n = 0;
-    gallery = '<table border="0"><tr>';
+    gallery = '<table border="0" align="center"><tr>';
     $.each(arr_image, function(k,v) {
         n++;
         gallery += '<td> <a rel="lightbox" href=" ' + link + v[0] + ' " class="cboxElement"><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
         if (n % parseInt(cols) == 0) gallery += '</tr><tr>'; 
     });
-    gallery += '</tr></table>';
+    gallery += '</tr></table><br/>';
     
     $('#wp-gallery #content').remove();
-    $('#wp-gallery').append('<div id="content"></div>');
+    $('#wp-gallery').append('<div id="content" class="row-fluid"></div>');
     
     $('#wp-gallery #content').append(gallery);
-    $('#wp-gallery #content').append('<textarea id="gallery" name="gallery" rows="8" cols="40" class="to_copy" readonly="true">' + gallery + '</textarea>');
+    $('#wp-gallery #content').append('<textarea id="gallery" name="gallery" rows="5" class="to_copy input-block-level" readonly="true">' + gallery + '</textarea>');
 }
 
 
 function wp_gallery_generate(){
-    col_options = 'Selecione o número de colunas';
-    col_options += '<select id="col_options"><option value="2">2</option><option value="3">3</option><option value="4">4</option></select> <br/>';
+    col_options = '<label for="col_options" class="help-inline">Selecione o número de colunas: </label> ';
+    col_options += '<select id="col_options" class="span1"><option value="2">2</option><option value="3">3</option><option value="4">4</option></select> <br/>';
     
     $('#wp-gallery').empty();
     $('#wp-gallery').append('<h1>Galeria de imagens</h1>');
@@ -109,26 +111,36 @@ var arr_image;
 
 $(document).ready(function() {
     $('#url').change(function() {
-        url = $(this).val();
+        url = $.trim($(this).val());
         arr_image = new Array();
         arr_audio = new Array();
         n_images = 0;
         n_audios = 0;
         
+        if (!url) {
+            $('#status').text('Por favor, digite a URL do archive.org!').attr('class','text-error');
+            $('#url').val('');
+            return false;
+        }
+        
         $('#result').css('display','none');
-        $('#status').text('buscando dados, aguarde...');
+        $('#status').text('buscando dados, aguarde...').attr('class','help-block');
         
         $.ajax({
-            url : 'archive-api-client.php',
-            type : 'post',
-            data : 'url=' + url,
-            dataType : 'json',
-            success : function(data) {
+            url         : 'archive-api-client.php',
+            type        : 'post',
+            data        : 'url=' + url,
+            dataType    : 'json',
+            error       : function(jqXHR,textStatus,errorThrown ){
+                $('#status').text('Erro! Por favor, verifique a URL').attr('class','text-error');
+                console.log(jqXHR,textStatus,errorThrown);
+            },
+            success     : function(data) {
                 
                 screen_initialize();
                 
                 $('#result').css('display','block');
-                $('#status').text('Dados encontrados!');
+                $('#status').text('Pronto!').attr('class','text-success');
                 
                 $('#title').val(data.metadata.title[0]);
                                             
