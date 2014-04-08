@@ -36,10 +36,10 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <div class="input-append input-block-level">
-                                <input class="to_copy input-block-level" type="url" name="url" value="" id="url" placeholder="Digite a URL do archive.org (ex.: https://archive.org/details/ezln-20-anos-de-autonomia-e-resistencia)"/>
+                                <input class="to_copy input-block-level" type="url" name="url" value="" id="url"/>
                                 <button type="button" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
                             </div>
-                            <span class="help-block" id="status">ex.: https://archive.org/details/ezln-20-anos-de-autonomia-e-resistencia</span>
+                            <span class="help-block" id="status"></span>
                         </div>
                     </div>
                     

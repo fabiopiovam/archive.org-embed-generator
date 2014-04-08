@@ -2,6 +2,8 @@
  * @author LaborAutonomo.org
  */
 
+var my_bookmarks = 'http://archive.org/bookmarks/Radio%20da%20Juventude';
+
 $(document).on('focus',".to_copy",function(){
     $(this).select();
 });
@@ -17,6 +19,7 @@ function get_audio(arr){
     link_base   = 'https://archive.org/download/' + identifier;
     audios      = '';
     unique_embed= '';
+    embed_alert = '';
     $.each(arr, function(k,v) {
         val = v[1];
         
@@ -29,9 +32,21 @@ function get_audio(arr){
             title_audio = v[0].substr(1).replace(/\.(mp3|ogg)$/gi,"");
         }
         
+        
         //embed
-        embed   = ' [iframe ' + embed_base + v[0] + ' 500 30]';
-        iframe  = '<iframe frameborder="0" style="height:30px;width:100%;" src="' + embed_base + v[0] + '">Please upgrade your browser</iframe>';
+        
+        /*
+         BUG!
+         The embed fails when there is space in the file name.
+         Feel free to a better solution
+         * */
+        if ((v[0].indexOf(' ')+1)) {
+            embed_alert = '<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Atenção!</strong> Não foi possível criar alguns embeds devido a espaçamentos no nome do arquivo :-/</div>';
+            return true; 
+        }
+        
+        embed       = ' [iframe ' + embed_base + v[0] + ' 500 30]';
+        iframe      = '<iframe frameborder="0" style="height:30px;width:100%;" src="' + embed_base + v[0] + '">Please upgrade your browser</iframe>';
         
         //link download
         link = ' Download: ';
@@ -50,6 +65,7 @@ function get_audio(arr){
     
     $('#wp-audio').append('<div id="content_audio" class="row-fluid"></div>');
     $('#wp-audio #content_audio').append('<h1>Audios</h1>');
+    $('#wp-audio #content_audio').append(embed_alert);
     $('#wp-audio #content_audio').append(audios);
     $('#wp-audio #content_audio').append(unique_embed);
 }
@@ -110,6 +126,23 @@ function screen_initialize(){
 var arr_image;
 
 $(document).ready(function() {
+    
+    /*
+     :-)
+     Customizing the sample with my bookmark
+     * */
+    $.ajax({
+        url         : 'archive-api-client.php',
+        type        : 'post',
+        data        : 'url=' + my_bookmarks,
+        dataType    : 'json',
+        success     : function(data) {
+            item = data[Math.floor((Math.random()*data.length)+1)]["identifier"];
+            $('#url').attr('placeholder','Digite a URL do archive.org (ex.: https://archive.org/details/' + item + ')');
+            $('#status').text('ex.: https://archive.org/details/'+item);
+        }
+    });    
+    
     $('#url').change(function() {
         url = $.trim($(this).val());
         arr_image = new Array();
@@ -138,9 +171,6 @@ $(document).ready(function() {
             success     : function(data) {
                 
                 screen_initialize();
-                
-                $('#result').css('display','block');
-                $('#status').text('Pronto!').attr('class','text-success');
                 
                 $('#title').val(data.metadata.title[0]);
                                             
@@ -181,6 +211,9 @@ $(document).ready(function() {
                     get_image(arr_image);
                     wp_gallery_generate();
                 }
+                
+                $('#result').css('display','block');
+                $('#status').text('Pronto!').attr('class','text-success');
             }
         });
     });
