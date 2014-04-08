@@ -94,7 +94,7 @@ function wp_gallery_items(cols){
     gallery = '<table border="0" align="center"><tr>';
     $.each(arr_image, function(k,v) {
         n++;
-        gallery += '<td> <a rel="lightbox" href=" ' + link + v[0] + ' " class="cboxElement"><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
+        gallery += '<td> <a rel="lightbox" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
         if (n % parseInt(cols) == 0) gallery += '</tr><tr>'; 
     });
     gallery += '</tr></table><br/>';
@@ -138,7 +138,7 @@ $(document).ready(function() {
         dataType    : 'json',
         success     : function(data) {
             item = data[Math.floor((Math.random()*data.length)+1)]["identifier"];
-            $('#url').attr('placeholder','Digite a URL do archive.org (ex.: https://archive.org/details/' + item + ')');
+            $('#url').attr('placeholder','Cole aqui a URL do archive.org (ex.: https://archive.org/details/' + item + ')');
             $('#status').text('ex.: https://archive.org/details/'+item);
         }
     });    
