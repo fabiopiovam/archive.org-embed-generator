@@ -57,7 +57,7 @@ function get_audio(arr){
         audios += '<div class="span5">' + title_audio + '<br/>' + iframe + '<br/>' + link + '<br/>' + ' <textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea><br/></div>';
     });
     
-    if (arr.length > 1){
+    if (arr.length > 1 || embed_alert){
         unique_embed = '<div class="span8"><h3>Lista com todos os audios agrupados</h3>';
         unique_embed += '<iframe src="' + embed_base + '&playlist=1" class="input-block-level" height="120" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe> <br/>';
         unique_embed += '<input type="text" value="[iframe ' + embed_base + '&playlist=1 500 120]" class="to_copy input-block-level" readonly="true" /> <br/><br/> </div>';
