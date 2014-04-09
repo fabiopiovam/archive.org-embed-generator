@@ -134,7 +134,7 @@ $(document).ready(function() {
         type        : 'post',
         dataType    : 'json',
         success     : function(data) {
-            item = data[Math.floor((Math.random()*data.length)+1)]["identifier"];
+            item = data[Math.floor((Math.random()*data.length-1)+1)]["identifier"];
             $('#url').attr('placeholder','Cole aqui a URL do archive.org (ex.: https://archive.org/details/' + item + ')');
             $('#status').text('ex.: https://archive.org/details/'+item);
         }
