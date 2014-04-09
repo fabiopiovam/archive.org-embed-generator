@@ -2,8 +2,6 @@
  * @author LaborAutonomo.org
  */
 
-var my_bookmarks = 'http://archive.org/bookmarks/Radio%20da%20Juventude';
-
 $(document).on('focus',".to_copy",function(){
     $(this).select();
 });
@@ -132,9 +130,8 @@ $(document).ready(function() {
      Customizing the sample with my bookmark
      * */
     $.ajax({
-        url         : 'archive-api-client.php',
+        url         : 'get-bookmarks.php',
         type        : 'post',
-        data        : 'url=' + my_bookmarks,
         dataType    : 'json',
         success     : function(data) {
             item = data[Math.floor((Math.random()*data.length)+1)]["identifier"];
@@ -160,7 +157,7 @@ $(document).ready(function() {
         $('#status').text('buscando dados, aguarde...').attr('class','help-block');
         
         $.ajax({
-            url         : 'archive-api-client.php',
+            url         : 'get-details-page.php',
             type        : 'post',
             data        : 'url=' + url,
             dataType    : 'json',
