@@ -13,12 +13,15 @@ $(document).on('change',"#col_options",function(){
 
 //converter solution found in http://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
 function bytes2size(bytes) {
-   var k = 1024;
-   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-   if (bytes === 0) return '0 Bytes';
-   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(k)),10);
-   return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+    var k = 1024;
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0)
+        return '0 Bytes';
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(k)), 10);
+    
+    return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
 }
+
 
 function get_audio(arr){
     
@@ -39,7 +42,6 @@ function get_audio(arr){
         else{
             title_audio = v[0].substr(1).replace(/\.(mp3|ogg)$/gi,"");
         }
-        
         
         //embed
         
@@ -141,14 +143,13 @@ $(document).ready(function() {
      * */
     $.ajax({
         url         : 'get-bookmarks.php',
-        type        : 'post',
         dataType    : 'json',
         success     : function(data) {
             item = data[Math.floor((Math.random()*data.length-1)+1)]["identifier"];
             $('#url').attr('placeholder','Cole aqui a URL do archive.org (ex.: https://archive.org/details/' + item + ')');
             $('#status').text('ex.: https://archive.org/details/'+item);
         }
-    });    
+    });
     
     $('#url').change(function() {
         url = $.trim($(this).val());
