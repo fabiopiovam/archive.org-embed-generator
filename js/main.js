@@ -10,6 +10,16 @@ $(document).on('change',"#col_options",function(){
     wp_gallery_items($(this).val());
 });
 
+
+//converter solution found in http://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
+function bytes2size(bytes) {
+   var k = 1024;
+   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+   if (bytes === 0) return '0 Bytes';
+   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(k)),10);
+   return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+}
+
 function get_audio(arr){
     
     identifier  = $('#identifier').val();
@@ -48,8 +58,8 @@ function get_audio(arr){
         
         //link download
         link = ' Download: ';
-        link += "<a href='" + link_base + v[0] + "' target='_blank'>" + val.format + "</a>";
-        if (typeof v.optional != 'undefined') link += " | <a href='" + link_base + v.optional[0] + "' target='_blank'>" + v.optional[1].format + "</a>";
+        link += "<a href='" + link_base + v[0] + "' target='_blank' title='Clique com o botão direito e escolha \"Salvar link como...\"'>" + val.format + " (" + bytes2size(val.size) + ")</a>";
+        if (typeof v.optional != 'undefined') link += " | <a href='" + link_base + v.optional[0] + "' target='_blank' title='Clique com o botão direito e escolha \"Salvar link como...\"'>" + v.optional[1].format + " (" + bytes2size(v.optional[1].size) + ")</a>";
         
         text = title_audio + embed + link;
         audios += '<div class="span5">' + title_audio + '<br/>' + iframe + '<br/>' + link + '<br/>' + ' <textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea><br/></div>';
