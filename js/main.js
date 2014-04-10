@@ -101,11 +101,20 @@ function wp_gallery_items(cols){
     link = 'https://archive.org/download/' + identifier;
     imgs = '';
     n = 0;
+    
+    /*
+     Colspan verify
+     * */
+    total_img       = arr_image.length;
+    cols            = (cols > total_img) ? total_img : cols;
+    cols_remainder  = (total_img % cols);
+    colspan         = (cols_remainder) ? ((parseInt(cols)) - cols_remainder) + 1 : 0;
+    
     gallery = '<table border="0" align="center"><tr>';
     $.each(arr_image, function(k,v) {
         n++;
-        gallery += '<td> <a rel="lightbox" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
-        if (n % parseInt(cols) == 0) gallery += '</tr><tr>'; 
+        gallery += '<td' + ((n==total_img && colspan) ? ' colspan="' +colspan+ '" ' : '') + '> <a rel="lightbox" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
+        if (n % parseInt(cols) == 0 && n < total_img) gallery += '</tr><tr>'; 
     });
     gallery += '</tr></table><br/>';
     
