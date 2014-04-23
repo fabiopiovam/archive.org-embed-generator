@@ -113,7 +113,7 @@ function wp_gallery_items(cols){
     gallery = '<table border="0" align="center"><tr>';
     $.each(arr_image, function(k,v) {
         n++;
-        gallery += '<td' + ((n==total_img && colspan) ? ' colspan="' +colspan+ '" ' : '') + '> <a rel="lightbox" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
+        gallery += '<td' + ((n==total_img && colspan) ? ' colspan="' +colspan+ '" ' : '') + '> <a rel="lightbox" data-lightbox="gallery-tbl" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
         if (n % parseInt(cols) == 0 && n < total_img) gallery += '</tr><tr>'; 
     });
     gallery += '</tr></table><br/>';
@@ -123,6 +123,8 @@ function wp_gallery_items(cols){
     
     $('#wp-gallery #content').append(gallery);
     $('#wp-gallery #content').append('<textarea id="gallery" name="gallery" rows="5" class="to_copy input-block-level" readonly="true">' + gallery + '</textarea>');
+    
+    update_input_field_info();
 }
 
 
@@ -142,16 +144,13 @@ function screen_initialize(){
     $('#elements').append('<div id="wp-audio"></div> <div id="wp-photos"></div> <div id="wp-gallery"></div>');
 }
 
-var arr_image;
-
-$(document).ready(function() {
-    
-    /*
-     :-)
-     Customizing the sample with my bookmark
-     * */
+/*
+ :-)
+ Customizing the sample with my bookmark
+ * */
+function get_my_bookmarks(){
     $.ajax({
-        url         : 'get-bookmarks.php',
+        url         : '/get-bookmarks.php',
         dataType    : 'json',
         success     : function(data) {
             item = data[Math.floor((Math.random()*data.length-1)+1)]["identifier"];
@@ -159,6 +158,15 @@ $(document).ready(function() {
             $('#status').text('ex.: https://archive.org/details/'+item);
         }
     });
+}
+
+function update_input_field_info(){
+    $('input[readonly="true"],textarea[readonly="true"]').attr('title','Selecione o conteúdo, copie e cole no artigo do seu blog (preferencialmente wordpress)');
+}
+
+var arr_image;
+
+$(document).ready(function() {
     
     $('#url').change(function() {
         url = $.trim($(this).val());
@@ -177,7 +185,7 @@ $(document).ready(function() {
         $('#status').text('buscando dados, aguarde...').attr('class','help-block');
         
         $.ajax({
-            url         : 'get-details-page.php',
+            url         : '/get-details-page.php',
             type        : 'post',
             data        : 'url=' + url,
             dataType    : 'json',
@@ -210,7 +218,7 @@ $(document).ready(function() {
                     }
                     
                     //audio
-                    if (value.format.match(/(ogg|mp3)/gi)) {
+                    if (value.format.match(/(ogg vorbis|mp3)/gi)) {
                         if (value.source == 'derivative') {
                             arr_audio[n_audios-1]['optional'] = [key,value];
                         }
@@ -231,7 +239,14 @@ $(document).ready(function() {
                 
                 $('#result').css('display','block');
                 $('#status').text('Pronto!').attr('class','text-success');
+                
+                update_input_field_info();
             }
         });
     });
+    
+    if($('#url').val())
+        $('#url').change();
+    else
+        get_my_bookmarks();
 });
