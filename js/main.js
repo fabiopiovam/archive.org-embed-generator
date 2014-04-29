@@ -64,7 +64,7 @@ function get_audio(arr){
         if (typeof v.optional != 'undefined') link += " | <a href='" + link_base + v.optional[0] + "' target='_blank' title='Clique com o botão direito e escolha \"Salvar link como...\"'>" + v.optional[1].format + " (" + bytes2size(v.optional[1].size) + ")</a>";
         
         text = title_audio + embed + link;
-        audios += '<div class="span5">' + title_audio + '<br/>' + iframe + '<br/>' + link + '<br/>' + ' <textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea><br/></div>';
+        audios += '<div class="span5" style="min-height:235px;">' + title_audio + '<br/>' + iframe + '<br/>' + link + '<br/>' + ' <textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea><br/></div>';
     });
     
     if (arr.length > 1 || embed_alert){
