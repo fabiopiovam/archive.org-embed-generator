@@ -86,8 +86,8 @@ function get_image(arr){
     link = 'https://archive.org/download/' + identifier;
     img = '';
     $.each(arr, function(k,v) {
-        text = '<a target="_blank" rel="lightbox" href=" ' + link + v[0] + ' "><img src=" ' + link + v.thumb[0] + ' " title="clique para aumentar"></a><br/><br/>';
-        img += '<div class="span3"> ' + text + ' <textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea> <br/></div>';
+        text = '<a target="_blank" rel="lightbox" href=" ' + link + v[0] + ' "><img src=" ' + link + v.thumb[0] + ' " title="clique para aumentar"></a>';
+        img += '<div class="span3"> ' + text + '<br/><br/><textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea> <br/></div>';
     });
     
     $('#wp-photos').append('<div id="img_content" class="row-fluid"></div>');
