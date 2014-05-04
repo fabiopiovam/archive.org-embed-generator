@@ -90,9 +90,7 @@ function get_image(arr){
         img += '<div class="span3" style="min-height:350px;"> ' + text + '<br/><br/><textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea> <br/></div>';
     });
     
-    $('#wp-photos').append('<div id="img_content" class="row-fluid"></div>');
-    $('#wp-photos #img_content').append('<h1>Imagens</h1>');
-    $('#wp-photos #img_content').append(img);
+    $('#wp-gallery #gallery-individual').append(img);
 }
 
 
@@ -144,12 +142,12 @@ function wp_gallery_div_generate(){
     
     gallery = '<div style="display:inline-block;">';
     $.each(arr_image, function(k,v) {
-        gallery += '<div style="float:left;margin:1px;"> <a rel="lightbox" data-lightbox="gallery-div" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </div>';
+        gallery += '<div style="float:left;margin:1px;min-height:195px;"> <a rel="lightbox" data-lightbox="gallery-div" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </div>';
     });
     gallery += '</div>';
     
     $('#wp-gallery #gallery-divs').append(gallery);
-    $('#wp-gallery #gallery-divs').append('<br/><br/><textarea id="gallery" name="gallery" rows="5" class="to_copy input-block-level" readonly="true">&amp;nbsp;\r\n\r\n' + gallery + '\r\n\r\n&amp;nbsp;\r\n\r\n&amp;nbsp;\r\n\r\n&amp;nbsp;\r\n\r\n&amp;nbsp;</textarea>');
+    $('#wp-gallery #gallery-divs').append('<textarea id="gallery" name="gallery" rows="5" class="to_copy input-block-level" readonly="true">&amp;nbsp;\r\n\r\n' + gallery + '\r\n\r\n&amp;nbsp;\r\n\r\n&amp;nbsp;\r\n\r\n&amp;nbsp;\r\n\r\n&amp;nbsp;</textarea>');
 }
 
 
@@ -159,13 +157,15 @@ function wp_gallery_generate(){
     
     $('#wp-gallery #content').remove();
     $('#wp-gallery').append('<div id="content" class="tabbable"></div>');
-    $('#wp-gallery #content').append('<ul class="nav nav-tabs"><li class="active"><a href="#gallery-divs" data-toggle="tab">Colunas dinâmicas</a></li><li><a href="#gallery-table" data-toggle="tab">Colunas fixas</a></li></ul>');
+    $('#wp-gallery #content').append('<ul class="nav nav-tabs"><li class="active"><a href="#gallery-divs" data-toggle="tab">Colunas dinâmicas</a></li><li><a href="#gallery-table" data-toggle="tab">Colunas fixas</a></li><li><a href="#gallery-individual" data-toggle="tab">Imagens individuais</a></li></ul>');
     $('#wp-gallery #content').append('<div class="tab-content"></div>');
     $('#wp-gallery #content .tab-content').append('<div class="tab-pane active" id="gallery-divs"></div>');
     $('#wp-gallery #content .tab-content').append('<div class="tab-pane" id="gallery-table"></div>');
+    $('#wp-gallery #content .tab-content').append('<div class="tab-pane" id="gallery-individual"></div>');
     
     wp_gallery_div_generate();
     wp_gallery_tbl_generate();
+    get_image(arr_image);
 }
 
 
@@ -265,7 +265,6 @@ $(document).ready(function() {
                 if (arr_audio.length) get_audio(arr_audio);
                 
                 if (arr_image.length) {
-                    get_image(arr_image);
                     wp_gallery_generate();
                 }
                 
