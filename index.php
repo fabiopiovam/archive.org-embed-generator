@@ -9,28 +9,12 @@
         <link href="<?php echo HOST; ?>/assets/lightbox/css/lightbox.css" rel="stylesheet" />
         <link href="<?php echo HOST; ?>/assets/bootstrap-2.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="<?php echo HOST; ?>/assets/bootstrap-2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-        
-        <style type="text/css" media="screen">
-            body{
-                background-image: url('<?php echo HOST; ?>/img/logo.png');
-                background-position: center 190px;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-            }
-            #result { display: none; }
-            
-            #wp-gallery table {
-                background-color: #EAEAEA;
-            }
-            #wp-gallery table tr td {
-                padding: 5px
-            }
-        </style>
+        <link href="<?php echo HOST; ?>/css/custom.css" rel="stylesheet" media="screen">
     </head>
     <body>
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span10">
+                <div class="span9">
                     <div class="row-fluid">
                         <div class="span12"></div>
                     </div>
@@ -46,7 +30,7 @@
                     
                     <div id="result">
                         <br/>
-                        <h1 id="">Informações</h1>
+                        <h1 id="section-info">Informações</h1>
                         <div>
                             <label for="title">Título</label>
                             <input type="text" name="title" value="" id="title" readonly="true" class="to_copy input-block-level"/>
@@ -64,7 +48,10 @@
                         <input type="hidden" name="identifier" value="" id="identifier"/>
                         
                         <div id="elements"></div>
-                    </div>
+                    </div>                    
+                </div>
+                <div class="bs-docs-sidebar hidden-phone span3" id="arch-navbar-spy">
+                    <ul id="arch-navbar" class="nav nav-list bs-docs-sidenav affix"></ul>
                 </div>
             </div>
         </div>
@@ -76,5 +63,6 @@
         <script src="<?php echo HOST; ?>/js/main.js" type="text/javascript" charset="utf-8"></script>
         <script src="<?php echo HOST; ?>/assets/lightbox/js/lightbox.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="<?php echo HOST; ?>/assets/bootstrap-2.3.2/js/bootstrap.min.js"></script>
+        <script src="<?php echo HOST; ?>/assets/bootstrap-2.3.2/js/bootstrap-scrollspy.js"></script>
     </body>
 </html>

@@ -1,0 +1,45 @@
+body{
+    background-image: url('/img/logo.png');
+    background-position: center 190px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+#result { display: none; }
+
+#wp-gallery table {
+    background-color: #EAEAEA;
+}
+#wp-gallery table tr td {
+    padding: 5px
+}
+.bs-docs-sidenav {
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    margin: 150px 0 0;
+    padding: 0;
+    width: 228px;
+}
+.bs-docs-sidenav > li > a {
+    border: 1px solid #E5E5E5;
+    display: block;
+    margin: 0 0 -1px;
+    padding: 8px 14px;
+}
+.bs-docs-sidenav > li:first-child > a {
+    border-radius: 6px 6px 0 0;
+}
+.bs-docs-sidenav > li:last-child > a {
+    border-radius: 0 0 6px 6px;
+}
+.bs-docs-sidenav .icon-chevron-left {
+    margin-left: -6px;
+    margin-top: 2px;
+    opacity: 0.25;
+}
+.bs-docs-sidenav .active .icon-chevron-left, .bs-docs-sidenav .active a:hover .icon-chevron-left {
+    background-image: url("/assets/bootstrap-2.3.2/img/glyphicons-halflings-white.png");
+    opacity: 1;
+}
