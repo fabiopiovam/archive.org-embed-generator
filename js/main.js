@@ -170,9 +170,8 @@ function wp_gallery_generate(){
 
 
 function screen_initialize(){
-    $("#arch-navbar").empty();
     $('#elements').empty();
-    $('#elements').append('<div id="wp-audio"></div> <div id="wp-photos"></div> <div id="wp-gallery"></div>');
+    $('#elements').append('<div id="wp-audio"></div> <div id="wp-gallery"></div>');
 }
 
 
@@ -220,6 +219,7 @@ $(document).ready(function() {
             return false;
         }
         
+        $("#arch-navbar").empty();
         $('#result').css('display','none');
         $('#status').text('buscando dados, aguarde...').attr('class','help-block');
         
