@@ -13,8 +13,8 @@ Using
 * [Twitter bootstrap 2.3.2](https://github.com/twbs/bootstrap)
 * [lightbox 2.7.1](https://github.com/lokesh/lightbox2/)
 
-### Configure your bookmarks archive.org (optional)
-Alter the get-bookmarks.php file to show your bookmark's archive.org as an example
+## Configure your bookmarks archive.org (optional)
+Alter the `get-bookmarks.php` file to show your bookmark's archive.org as an example
 
 ```php
 /*
