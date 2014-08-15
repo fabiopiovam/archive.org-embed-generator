@@ -3,7 +3,7 @@ archive.org embed generator
 
 Gerador de embed de arquivos armazenados no Archive.org para Wordpress, principalmente. 
 
-Disponível [aqui](http://archive.laborautonomo.org/ "Acessar")
+Disponível [aqui](http://archive.laborautonomo.96.lt/ "Acessar")
 
 Utilizando
 ----------

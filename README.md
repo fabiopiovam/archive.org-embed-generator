@@ -3,7 +3,7 @@ archive.org embed generator
 
 Archive.org embed generator to wordpress
 
-Available [here](http://archive.laborautonomo.org/ "click me")
+Available [here](http://archive.laborautonomo.96.lt/ "click me")
 
 Using
 -----
