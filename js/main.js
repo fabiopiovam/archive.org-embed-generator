@@ -86,8 +86,10 @@ function get_image(arr){
     link = 'https://archive.org/download/' + identifier;
     img = '';
     $.each(arr, function(k,v) {
-        text = '<a target="_blank" rel="lightbox" href=" ' + link + v[0] + ' "><img src=" ' + link + v.thumb[0] + ' " title="clique para aumentar"></a>';
-        img += '<div class="span3" style="min-height:350px;"> ' + text + '<br/><br/><textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea> <br/></div>';
+        if (typeof v.thumb != 'undefined') {
+            text = '<a target="_blank" rel="lightbox" href=" ' + link + v[0] + ' "><img src=" ' + link + v.thumb[0] + ' " title="clique para aumentar"></a>';
+            img += '<div class="span3" style="min-height:350px;"> ' + text + '<br/><br/><textarea id="' + v[0] + '" class="to_copy input-block-level" rows="4" readonly="true">' + text + '</textarea> <br/></div>';
+        }
     });
     
     $('#wp-gallery #gallery-individual').append(img);
@@ -110,9 +112,11 @@ function wp_gallery_tbl_items(cols){
     
     gallery = '<table border="0" align="center"><tr>';
     $.each(arr_image, function(k,v) {
-        n++;
-        gallery += '<td' + ((n==total_img && colspan) ? ' colspan="' +colspan+ '" ' : '') + '> <a rel="lightbox" data-lightbox="gallery-tbl" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
-        if (n % parseInt(cols) == 0 && n < total_img) gallery += '</tr><tr>'; 
+        if (typeof v.thumb != 'undefined') {
+            n++;
+            gallery += '<td' + ((n==total_img && colspan) ? ' colspan="' +colspan+ '" ' : '') + '> <a rel="lightbox" data-lightbox="gallery-tbl" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </td>';
+            if (n % parseInt(cols) == 0 && n < total_img) gallery += '</tr><tr>';
+        } 
     });
     gallery += '</tr></table><br/>';
     
@@ -142,7 +146,9 @@ function wp_gallery_div_generate(){
     
     gallery = '<div style="display:inline-block;">';
     $.each(arr_image, function(k,v) {
-        gallery += '<div style="float:left;margin:1px;min-height:195px;"> <a rel="lightbox" data-lightbox="gallery-div" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </div>';
+        if (typeof v.thumb != 'undefined') {
+            gallery += '<div style="float:left;margin:1px;min-height:195px;"> <a rel="lightbox" data-lightbox="gallery-div" href=" ' + link + v[0] + ' "><img alt="" src="' + link + v.thumb[0] + '"></a> </div>';
+        }
     });
     gallery += '</div>';
     
